@@ -1,5 +1,6 @@
 package com.netease.login.entity;
 
+import com.sun.istack.internal.Nullable;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,8 @@ public class User {
     private String accountId;
     @NotNull
     private String password;
+    @Nullable
+    private String newPassword;
 
     public String getAccountId() {
         return accountId;
@@ -28,5 +31,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

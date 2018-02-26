@@ -24,16 +24,19 @@ public class LoginController {
     UserServiceImpl mUserService;
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String go2LoginPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "login";
     }
 
     @PostMapping(value = "/login")
-    public void loginSubmit(@ModelAttribute User user) {
-        System.out.println(user.getAccountId());
-        System.out.println(user.getPassword());
+    public void realLogin(@ModelAttribute User user) {
+        if (null == user) {
+            LOG.error(user.getAccountId());
+            return;
+        }
+        LOG.info(user.getAccountId() + " : " + user.getPassword());
         if (mUserService.login(user)) {
             LOG.info("login success.");
         } else {
