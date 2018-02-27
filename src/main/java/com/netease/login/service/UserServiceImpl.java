@@ -1,6 +1,6 @@
 package com.netease.login.service;
 
-import com.netease.login.entity.User;
+import com.netease.login.entity.request.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     public boolean login(User user) {
-        String sql = "SELECT account_id FROM user WHERE account_id=? AND password=?";
-        return mJdbcTemplate.queryForObject(sql, String.class, new String[]{user.getAccountId(), user.getPassword()}) != null;
+        String sql = "SELECT COUNT(*) FROM user WHERE account_id=? AND password=?";
+        int count = mJdbcTemplate.queryForObject(sql, Integer.class, new String[]{user.getAccountId(), user.getPassword()});
+        return  count > 0;
     }
 
     @Override

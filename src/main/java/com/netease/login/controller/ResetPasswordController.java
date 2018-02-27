@@ -18,12 +18,12 @@ public class ResetPasswordController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @GetMapping("reset_password")
+    @GetMapping("/reset_password")
     public String resetPassword() {
         return "reset_password";
     }
 
-    @PostMapping("reset_password")
+    @PostMapping("/reset_password")
     public void resetPassword(String User) {
 
     }

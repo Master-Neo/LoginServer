@@ -1,4 +1,4 @@
-package com.netease.login.entity;
+package com.netease.login.entity.request;
 
 import com.sun.istack.internal.Nullable;
 import org.hibernate.validator.constraints.Email;

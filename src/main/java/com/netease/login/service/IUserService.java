@@ -1,6 +1,6 @@
 package com.netease.login.service;
 
-import com.netease.login.entity.User;
+import com.netease.login.entity.request.User;
 
 /**
  * Created by neo on 2018/2/26.
