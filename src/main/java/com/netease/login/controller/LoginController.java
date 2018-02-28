@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
+
 /**
  * Created by neo on 2018/2/20.
  */
 @Controller
 @ComponentScan()
 public class LoginController {
-
     private static final Logger LOG = Logger.getLogger(LoginController.class.getSimpleName());
-
     @Autowired
     UserServiceImpl mUserService;
 
@@ -38,10 +38,13 @@ public class LoginController {
     BaseResponse<UserResult> realLogin(@ModelAttribute User user) {
         BaseResponse<UserResult> response = new BaseResponse<>();
         UserResult result = new UserResult();
-        if (null == user) {
+
+        if (null == user || user.getAccountId().isEmpty() || user.getPassword().isEmpty()) {
             response.setCode("-1"); // 返回参数错误
             result.setDesc("参数错误");
+            response.setData(result);
             LOG.error(user.getAccountId());
+            return response;
         }
 
         response.setCode("200");
@@ -50,7 +53,7 @@ public class LoginController {
         if (mUserService.login(user)) {
             LOG.info("login success.");
             // TODO: 2018/2/27 生成sessionId，作为cookie返回给h5
-
+            result.setDesc("登录成功");
             result.setSuccess(true);
             result.setUrl("/login_success");
         } else {
@@ -59,6 +62,12 @@ public class LoginController {
             result.setSuccess(false);
             result.setDesc("用户名/密码错误");
         }
+        response.setData(result);
         return response;
+    }
+
+    @GetMapping(value = "/login_success")
+    public String go2LoginSuccessPage() {
+        return "login_success";
     }
 }

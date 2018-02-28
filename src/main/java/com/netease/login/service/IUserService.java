@@ -21,7 +21,6 @@ public interface IUserService {
     /**
      * 重置密码
      * @param user
-     * @param newPassword
      */
-    void resetPassword(User user, String newPassword);
+    int resetPassword(User user);
 }

@@ -28,15 +28,20 @@ public class RegisterController {
     public @ResponseBody BaseResponse<UserResult> register_submit(@ModelAttribute User user) {
         LOG.info(user.getAccountId() + " : " + user.getNewPassword());
         BaseResponse<UserResult> response = new BaseResponse<>();
+        UserResult result = new UserResult();
 
         if (null == user || user.getAccountId().isEmpty() || user.getPassword().isEmpty()) {
             response.setCode("-1");
+            result.setDesc("参数错误");
+            response.setData(result);
             return response;
         }
+
         response.setCode("200");
-        UserResult result = new UserResult();
+
         if (mUserService.register(user)) {
             result.setSuccess(true);
+            result.setDesc("注册成功");
             result.setUrl("/login");
         } else {
             result.setSuccess(false);
