@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import static com.netease.login.IConstants.ERROR_CODE_RESET_PASSWORD;
-import static com.netease.login.IConstants.ERROR_CODE_USER_NOT_REGISTER;
-import static com.netease.login.IConstants.SUCCESS_RESET_PASSWORD;
+import static com.netease.login.IConstants.*;
 
 /**
  * Created by neo on 2018/2/24.
@@ -40,13 +38,13 @@ public class ResetPasswordController {
         UserResult result = new UserResult();
 
         if (null == user || user.getAccountId().isEmpty() || user.getPassword().isEmpty() || user.getNewPassword().isEmpty()) {
-            response.setCode("-1");
-            result.setDesc("参数错误");
+            response.setCode(CODE_ERROR_PARAM_REQUEST);
+            result.setDesc(DESC_ERROR_PARAM);
             response.setData(result);
             return response;
         }
 
-        response.setCode("200");
+        response.setCode(CODE_SUCCESS_REQUEST);
 
         int code = mUserService.resetPassword(user);
         if (code == SUCCESS_RESET_PASSWORD) {
