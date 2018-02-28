@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 
+import static com.netease.login.IConstants.CODE_ERROR_PARAM_REQUEST;
+import static com.netease.login.IConstants.CODE_SUCCESS_REQUEST;
+import static com.netease.login.IConstants.DESC_ERROR_PARAM;
+
 /**
  * Created by neo on 2018/2/20.
  */
@@ -40,14 +44,14 @@ public class LoginController {
         UserResult result = new UserResult();
 
         if (null == user || user.getAccountId().isEmpty() || user.getPassword().isEmpty()) {
-            response.setCode("-1"); // 返回参数错误
-            result.setDesc("参数错误");
+            response.setCode(CODE_ERROR_PARAM_REQUEST); // 返回参数错误
+            result.setDesc(DESC_ERROR_PARAM);
             response.setData(result);
             LOG.error(user.getAccountId());
             return response;
         }
 
-        response.setCode("200");
+        response.setCode(CODE_SUCCESS_REQUEST);
         LOG.info(user.getAccountId() + " : " + user.getPassword());
 
         if (mUserService.login(user)) {
