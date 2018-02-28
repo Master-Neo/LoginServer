@@ -2,7 +2,7 @@ package com.netease.login.controller;
 
 import com.netease.login.entity.request.User;
 import com.netease.login.entity.base.BaseResponse;
-import com.netease.login.entity.response.LoginResult;
+import com.netease.login.entity.response.UserResult;
 import com.netease.login.service.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +35,9 @@ public class LoginController {
 
     @PostMapping(value = "/login")
     public @ResponseBody
-    BaseResponse<LoginResult> realLogin(@ModelAttribute User user) {
-        BaseResponse<LoginResult> response = new BaseResponse<>();
-        LoginResult result = new LoginResult();
+    BaseResponse<UserResult> realLogin(@ModelAttribute User user) {
+        BaseResponse<UserResult> response = new BaseResponse<>();
+        UserResult result = new UserResult();
         if (null == user) {
             response.setCode("-1"); // 返回参数错误
             result.setDesc("参数错误");

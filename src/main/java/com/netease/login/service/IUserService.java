@@ -10,7 +10,7 @@ public interface IUserService {
      * 注册
      * @param user
      */
-    void register(User user);
+    boolean register(User user);
 
     /**
      *

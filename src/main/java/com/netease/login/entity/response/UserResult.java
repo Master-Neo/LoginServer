@@ -1,6 +1,6 @@
 package com.netease.login.entity.response;
 
-public class LoginResult {
+public class UserResult {
     private String url;
     private boolean isSuccess;
     private String desc;

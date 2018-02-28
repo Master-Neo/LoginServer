@@ -34,25 +34,36 @@
 
 <script>
     $('.form-signin').submit(function() {
-            var pwd_first = document.getElementById('pwd1')
-            var pwd_second = document.getElementById('pwd2')
+            var pwd_first = document.getElementById('pwd1').value
+            var pwd_second = document.getElementById('pwd2').value
             if (pwd_first != pwd_second) {
                 alert('密码要一样')
+                return false
             }
-    })
-</script>
+            $.ajax({
+                method: 'POST',
+                url: '/register_submit',
+                data: {
+                    accountId:document.getElementById('inputEmail').value,
+                    password:pwd_first
+                },
+                success:function(data) {
+                    if(data.code == '200') {
+                        if(data.data.success) {
+                            alert("注册成功")
+                            location.href = data.data.url;
+                        } else {
+                            alert(data.data.desc)
+                        }
+                    } else if(data.code == '-1'){
+                        alert('参数错误');
+                    }
+                },
+                error:function() {
 
-<script>
-    $('.form-signin').submit(function(e) {
-        $.ajax({
-            method: 'POST',
-            url: '/login_submit',
-            data: $(this).serialize(),
-            dataType: 'json'
-        }).done(function (data) {
-            //
-        })
-        return false
+                }
+            })
+            return false
     })
 </script>
 
