@@ -2,7 +2,7 @@ package com.netease.login.entity.base;
 
 public class BaseResponse<T> {
     private String code;
-    private T entity;
+    private T data;
 
     public String getCode() {
         return code;
@@ -12,11 +12,11 @@ public class BaseResponse<T> {
         this.code = code;
     }
 
-    public T getEntity() {
-        return entity;
+    public T getData() {
+        return data;
     }
 
-    public void setEntity(T entity) {
-        this.entity = entity;
+    public void setData(T data) {
+        this.data = data;
     }
 }

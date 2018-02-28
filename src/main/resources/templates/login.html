@@ -47,11 +47,15 @@
                 password:document.getElementById('inputPassword').value
             },
             success:function(data) {
-                // if(data.result == 0) {
-                //     location.href = data.url;
-                // } else {
-                //
-                // }
+                if(data.code == '200') {
+                    if(data.data.success) {
+                        location.href = data.data.url;
+                    } else {
+                        alert(data.data.desc)
+                    }
+                } else if(data.code == '-1'){
+                    alert('参数错误');
+                }
             },
             error:function() {
 
