@@ -5,6 +5,9 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.NotNull;
 
+import static com.netease.login.IConstants.CODE_ERROR_PARAM_REQUEST;
+import static com.netease.login.IConstants.DESC_ERROR_PARAM;
+
 /**
  * Created by neo on 2018/2/23.
  */
@@ -39,5 +42,19 @@ public class User {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public boolean checkValidDefault() {
+        if (null == this || this.getAccountId().isEmpty() || this.getPassword().isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkValidForSetPassword() {
+        if (null == this || this.getAccountId().isEmpty() || this.getPassword() == null || this.getPassword().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }

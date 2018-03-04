@@ -41,7 +41,7 @@ public class LoginController {
         BaseResponse<UserResult> response = new BaseResponse<>();
         UserResult result = new UserResult();
 
-        if (null == user || user.getAccountId().isEmpty() || user.getPassword().isEmpty()) {
+        if (user.checkValidDefault()) {
             response.setCode(CODE_ERROR_PARAM_REQUEST); // 返回参数错误
             result.setDesc(DESC_ERROR_PARAM);
             response.setData(result);
@@ -60,7 +60,6 @@ public class LoginController {
             result.setUrl("/login_success");
         } else {
             LOG.error("login failed.");
-            // TODO: 将登陆结果返回给前端
             result.setSuccess(false);
             result.setDesc("用户名/密码错误");
         }
