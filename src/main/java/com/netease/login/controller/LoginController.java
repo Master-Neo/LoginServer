@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.Valid;
-
 import static com.netease.login.IConstants.CODE_ERROR_PARAM_REQUEST;
 import static com.netease.login.IConstants.CODE_SUCCESS_REQUEST;
 import static com.netease.login.IConstants.DESC_ERROR_PARAM;
