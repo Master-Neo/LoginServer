@@ -1,5 +1,6 @@
 package com.netease.login.controller;
 
+import com.netease.login.config.WebSecurityConfig;
 import com.netease.login.entity.request.User;
 import com.netease.login.entity.base.BaseResponse;
 import com.netease.login.entity.response.UserResult;
@@ -9,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 import static com.netease.login.IConstants.CODE_ERROR_PARAM_REQUEST;
 import static com.netease.login.IConstants.CODE_SUCCESS_REQUEST;
@@ -37,11 +37,11 @@ public class LoginController {
 
     @PostMapping(value = "/login")
     public @ResponseBody
-    BaseResponse<UserResult> realLogin(@ModelAttribute User user) {
+    BaseResponse<UserResult> realLogin(@ModelAttribute User user, HttpSession session) {
         BaseResponse<UserResult> response = new BaseResponse<>();
         UserResult result = new UserResult();
 
-        if (user.checkValidDefault()) {
+        if (!user.checkValidDefault()) {
             response.setCode(CODE_ERROR_PARAM_REQUEST); // 返回参数错误
             result.setDesc(DESC_ERROR_PARAM);
             response.setData(result);
@@ -54,10 +54,12 @@ public class LoginController {
 
         if (mUserService.login(user)) {
             LOG.info("login success.");
-            // TODO: 2018/2/27 生成sessionId，作为cookie返回给h5
+
+            session.setAttribute(WebSecurityConfig.KEY_SESSION, user.getAccountId());
+
             result.setDesc("登录成功");
             result.setSuccess(true);
-            result.setUrl("/login_success");
+            result.setUrl("/index");
         } else {
             LOG.error("login failed.");
             result.setSuccess(false);
@@ -67,8 +69,9 @@ public class LoginController {
         return response;
     }
 
-    @GetMapping(value = "/login_success")
-    public String go2LoginSuccessPage() {
-        return "login_success";
+    @GetMapping(value = "/index")
+    public String go2MainPage(@SessionAttribute(WebSecurityConfig.KEY_SESSION) String accountId, Model model) {
+        model.addAttribute("accountId", accountId);
+        return "index";
     }
 }
