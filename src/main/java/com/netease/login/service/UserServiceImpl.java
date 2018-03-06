@@ -57,8 +57,6 @@ public class UserServiceImpl implements IUserService {
         return false;
     }
 
-
-
     @Override
     public int resetPassword(User user) {
         if (login(user)) {
