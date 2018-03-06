@@ -34,7 +34,7 @@ public class RegisterController {
         BaseResponse<UserResult> response = new BaseResponse<>();
         UserResult result = new UserResult();
 
-        if (user.checkValidDefault()) {
+        if (!user.checkValidDefault()) {
             response.setCode(CODE_ERROR_PARAM_REQUEST);
             result.setDesc(DESC_ERROR_PARAM);
             response.setData(result);
